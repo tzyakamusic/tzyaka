@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THM Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Mono',monospace;font-weight:300;background:#fff;color:#000}
+a{text-decoration:none;color:inherit}
+#catalog,#product{padding:32px}
+#product{display:none;max-width:900px;margin:auto}
+.header{font-size:14px;margin-bottom:40px;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:64px 32px}
+.item img,#detailImg{width:100%;aspect-ratio:1;object-fit:cover;background:#f4f4f4}
+.name{margin-top:12px;font-size:14px}
+.price{margin-top:4px;font-size:14px}
+button{width:100%;padding:16px;margin-top:16px;border:1px solid #000;background:#fff;font:inherit;cursor:pointer}
+button:hover:not(:disabled){background:#000;color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+.back{cursor:pointer;margin-bottom:24px;display:inline-block}
+</style>
+</head>
+<body>
+<div id="catalog">
+<div class="header">THM</div>
+<div class="grid" id="grid"></div>
+</div>
+
+<div id="product">
+<div class="back" onclick="backToCatalog()">← BACK</div>
+<img id="detailImg">
+<div class="name" id="detailName" style="margin-top:24px;font-size:20px"></div>
+<div class="price" id="detailPrice"></div>
+<button disabled>UNAVAILABLE</button>
+<button onclick="window.location.href='https://example.com'">PRE-SAVE</button>
+</div>
+
+<script>
+const products=[
+{name:"EVIL TRAPP DIGITAL ALBUM",price:"$10.00",img:"images/evil-cover.jpg"},
+{name:"EVIL TRAPP CD",price:"$10.00",img:"images/evil-cd.jpg"},
+{name:"XAAL DIGITAL ALBUM",price:"$10.00",img:"images/xaal-cover.jpg"},
+{name:"XAAL CD",price:"$10.00",img:"images/xaal-cd.jpg"},
+{name:"XAAL CD DELUXE",price:"$15.00",img:"images/xaal-deluxe.jpg"}
+];
+
+const grid=document.getElementById('grid');
+
+products.forEach(p=>{
+ const d=document.createElement('div');
+ d.className='item';
+ d.innerHTML=`<img src="${p.img}" alt=""><div class="name">${p.name}</div><div class="price">${p.price}</div>`;
+ d.onclick=()=>openProduct(p);
+ grid.appendChild(d);
+});
+
+function openProduct(p){
+ document.getElementById('catalog').style.display='none';
+ document.getElementById('product').style.display='block';
+ detailImg.src=p.img;
+ detailName.textContent=p.name;
+ detailPrice.textContent=p.price;
+ window.scrollTo(0,0);
+}
+function backToCatalog(){
+ document.getElementById('product').style.display='none';
+ document.getElementById('catalog').style.display='block';
+}
+</script>
+</body>
+</html>
